@@ -8,6 +8,7 @@ class Game {
   gameBoardSelector = '.game-board'
   circleSelector = '.circle'
   resetSelector = '.reset'
+  messageSelector = '.message'
 
   constructor(config) {   
     console.log('game constructed')
@@ -17,6 +18,7 @@ class Game {
     this.columnSelector = config.column || this.columnSelector
     this.circleSelector = config.circle || this.circleSelector
     this.resetSelector = config.reset || this.resetSelector
+    this.messageSelector = config.message || this.messageSelector
 
     this.gameBoardElement = document.querySelector(this.gameBoardSelector)
     this.registerClickHandlers() 
@@ -60,6 +62,7 @@ class Game {
     this.swapCurrentPlayer()
 
     console.log('Next turn')
+    document.querySelector(this.messageSelector).innerHTML = `Next player - ${this.currentPlayer} counter's move`
   }
 
   isGameFinished() {
@@ -126,6 +129,7 @@ class Game {
 
     document.querySelectorAll(this.columnSelector).forEach(n => n.classList.add('playable'))
     document.querySelectorAll(this.circleSelector).forEach(x => x.parentNode.removeChild(x))
+    document.querySelector(this.messageSelector).innerHTML = `First up - it's ${this.currentPlayer} counter's move`
     console.log('reset')
   }
 
@@ -135,7 +139,7 @@ class Game {
     if (result) {
       return result
     }
-
+    // Need to map and reverse a new array
     const reversedTable = grid.map((r) => Array.from(r).reverse())
     return this.checkDiagonal(reversedTable)
   }
@@ -210,6 +214,7 @@ class Game {
         return currentColor
       }
       lastColor = currentColor
+      document.querySelector(this.messageSelector).innerHTML = `Hurray - ${this.currentPlayer} counter has won!`
     }
   }
 }
