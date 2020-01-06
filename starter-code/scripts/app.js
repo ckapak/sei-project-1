@@ -1,3 +1,11 @@
+// enumeration with objects - reusing a fixed string, eliminates error
+
+const FinishCondition = {
+  UNFINISHED: 'unfinished',
+  DRAW: 'draw',
+  WIN: 'win'
+}
+
 class Game {
 
   grid = []
@@ -52,17 +60,30 @@ class Game {
       columnElement.classList.remove('playable')
     } 
 
-    const isFinished = this.isGameFinished()
-    if (isFinished) {
-      console.log('Game is finished')
-      document.querySelectorAll(this.columnSelector).forEach(x => x.classList.remove('playable'))
+    const isFinishedResult = this.isGameFinished()
+    if (isFinishedResult === FinishCondition.UNFINISHED) {
+      this.swapCurrentPlayer()
+
+      console.log('Next turn')
+      document.querySelector(this.messageSelector).innerHTML = `Next player - ${this.currentPlayer}'s move`
       return
     }
     
-    this.swapCurrentPlayer()
+    document.querySelectorAll(this.columnSelector).forEach(x => x.classList.remove('playable'))
 
-    console.log('Next turn')
-    document.querySelector(this.messageSelector).innerHTML = `Next player - ${this.currentPlayer} counter's move`
+    if (isFinishedResult === FinishCondition.WIN) {
+      console.log('Game is finished because current player has won')
+      document.querySelector(this.messageSelector).innerHTML = `Hurray - ${this.currentPlayer} has won!`
+      return
+    } 
+
+    if (isFinishedResult === FinishCondition.DRAW) {
+      console.log('Game is drawn')
+      document.querySelector(this.messageSelector).innerHTML = 'It\'s a draw! Play again?'
+      return
+    } 
+
+    throw 'An unknown FinishCondition occurred'
   }
 
   isGameFinished() {
@@ -70,13 +91,13 @@ class Game {
     
     if (winner) {
       console.log(`Winner is: ${winner}`)
-      return true
+      return FinishCondition.WIN
     } else if (this.checkForDraw(this.grid)) {
       console.log('It\'s a draw')
-      return true
+      return FinishCondition.DRAW
     }
 
-    return false
+    return FinishCondition.UNFINISHED
   }
 
   addCounterElement(columnElement, columnIndex, color) {
@@ -129,7 +150,7 @@ class Game {
 
     document.querySelectorAll(this.columnSelector).forEach(n => n.classList.add('playable'))
     document.querySelectorAll(this.circleSelector).forEach(x => x.parentNode.removeChild(x))
-    document.querySelector(this.messageSelector).innerHTML = `First up - it's ${this.currentPlayer} counter's move`
+    document.querySelector(this.messageSelector).innerHTML = `First up - it's ${this.currentPlayer}'s move`
     console.log('reset')
   }
 
@@ -139,11 +160,12 @@ class Game {
     if (result) {
       return result
     }
-    // Need to map and reverse a new array
+    // Need to map and reverse a new array as it's altering the old one
     const reversedTable = grid.map((r) => Array.from(r).reverse())
     return this.checkDiagonal(reversedTable)
   }
 
+  // check diagonally
   checkDiagonal(grid) {
     const height = grid.length
     const width = grid[0].length
