@@ -1,4 +1,4 @@
-// enumeration with objects - reusing a fixed string, eliminates error
+// enumeration with objects - reusing a fixed string, eliminates errors
 
 const FinishCondition = {
   UNFINISHED: 'unfinished',
@@ -150,7 +150,7 @@ class Game {
 
     document.querySelectorAll(this.columnSelector).forEach(n => n.classList.add('playable'))
     document.querySelectorAll(this.circleSelector).forEach(x => x.parentNode.removeChild(x))
-    document.querySelector(this.messageSelector).innerHTML = `First up - it's ${this.currentPlayer}'s move`
+    document.querySelector(this.messageSelector).innerHTML = `First up - it's ${this.currentPlayer}'s turn`
     console.log('reset')
   }
 
@@ -236,14 +236,14 @@ class Game {
         return currentColor
       }
       lastColor = currentColor
-      document.querySelector(this.messageSelector).innerHTML = `Hurray - ${this.currentPlayer} counter has won!`
+      document.querySelector(this.messageSelector).innerHTML = `Hurray - ${this.currentPlayer} has won!`
     }
   }
 }
 
 window.addEventListener('DOMContentLoaded', () => {
 
-  const game = new Game()
+  new Game()
 
 })
 
