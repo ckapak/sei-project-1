@@ -1,4 +1,4 @@
-// enumeration with objects - reusing a fixed string, eliminates errors
+// enumeration with objects - reusing a fixed string, eliminates errors, offers strong type safety.
 
 const FinishCondition = {
   UNFINISHED: 'unfinished',
