@@ -103,11 +103,3 @@ body {
 .blue {
   background-color: #0033FF;
 }
-
-@media screen and (max-width:840px) {
-
-.container {
-  height: 10%;
-}
-
-}
