@@ -1,5 +1,3 @@
-// enumeration with objects - reusing a fixed string, eliminates errors, offers strong type safety.
-
 const FinishCondition = {
   UNFINISHED: 'unfinished',
   DRAW: 'draw',
@@ -100,6 +98,8 @@ class Game {
     return FinishCondition.UNFINISHED
   }
 
+  // dropping a counter to a column - its transition from invisible to visible
+  // appends the counter to the column div
   addCounterElement(columnElement, columnIndex, color) {
     const div = document.createElement('div')
     div.classList.add('circle')
@@ -135,6 +135,7 @@ class Game {
 
   }
 
+  // when the game restarts it starts on the red counter
   reset() {
 
     this.currentPlayer = 'red'
@@ -160,7 +161,7 @@ class Game {
     if (result) {
       return result
     }
-    // Need to map and reverse a new array as it's altering the old one
+    // mapping and reversing a new array because the old one was being altered
     const reversedTable = grid.map((r) => Array.from(r).reverse())
     return this.checkDiagonal(reversedTable)
   }
@@ -246,4 +247,3 @@ window.addEventListener('DOMContentLoaded', () => {
   new Game()
 
 })
-
