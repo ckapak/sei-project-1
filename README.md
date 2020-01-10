@@ -20,6 +20,8 @@ We were given the following options:
 
 I choose Connect 4, purely for nostalgia reasons! 
 
+You can play the game here: https://ckapak.github.io/sei-project-1/ 
+
 ## About Connect 4
 
 Connect 4 is a game where players attempt to make a line of four pieces in a 7 x 6 grid. Players can drop their pieces into columns, so that their piece rests in the lowest available space in that column.
